@@ -10,8 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.SwaggerGen.ConventionalRouting;
 
-namespace Epsic.Info3e.Rpg
+namespace Epsic.Rpg
 {
     public class Startup
     {
@@ -25,8 +26,13 @@ namespace Epsic.Info3e.Rpg
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(jsonOptions =>
+            {
+                jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
             services.AddSwaggerGen();
+            // this will handle all conventional based routes
+            services.AddSwaggerGenWithConventionalRoutes();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
